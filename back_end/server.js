@@ -16,43 +16,56 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
   .catch(err => console.log(err));
 
 // Define a simple schema
-const ItemSchema = new mongoose.Schema({
-  name: String,
-  SKUCode: String,
+const BookSchema = new mongoose.Schema({
+  BookName: {
+    type: String,
+    require: true,
+  },
+  Description: {
+    type: String,
+    require: true,
+  },
+  Author: {
+    type: String,
+    require: true,
+  },
+  Comment: {
+    type: String,
+    require: true,
+  },
+  Status: {
+    type: String,
+    require: true,
+  },
 });
 
-const Item = mongoose.model('Item', ItemSchema);
+const Book = mongoose.model('Books', BookSchema);
 
 // CRUD routes
-app.post('/items', async (req, res) => {
-  const newItem = new Item(req.body);
-  await newItem.save();
-  res.json(newItem);
+app.post('/books', async (req, res) => {
+  const newBook = new Book(req.body);
+  await newBook.save();
+  res.json(newBook);
 });
 
-app.get('/items', async (req, res) => {
-  const items = await Item.find();
-  res.json(items);
+app.get('/books', async (req, res) => {
+  const books = await Book.find();
+  res.json(books);
 });
 
-app.get('/items/:id', async (req, res) => {
- /* const itemId = req.query.params.id; 
-  const itemFound = items.filter(checkItem(item)); 
-  function checkItem(item) 
-  { return item.id == itemId; }
-  res.json(itemFound);*/
-  const items = await Item.findById(req.params.id);
-  res.json(items);
+app.get('/book/:id', async (req, res) => {
+  const books = await Book.findById(req.params.id);
+  res.json(books);
 });
 
-app.put('/items/:id', async (req, res) => {
-  const updatedItem = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(updatedItem);
+app.put('/books/:id', async (req, res) => {
+  const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  res.json(updatedBook);
 });
 
-app.delete('/items/:id', async (req, res) => {
-  await Item.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Item deleted' });
+app.delete('/books/:id', async (req, res) => {
+  await Book.findByIdAndDelete(req.params.id);
+  res.json({ message: 'Book deleted' });
 });
 
 // Start server

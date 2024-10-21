@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ItemForm from './components/ItemForm';
-import ItemList from './components/ItemList';
+import BookForm from './components/BookForm';
+import BookList from './components/BookList';
 
 const App = () => {
-  const [items, setItems] = useState([]);
+  const [books, setBooks] = useState([]);
 
-  const fetchItems = async () => {
-    const res = await axios.get('http://localhost:5000/items');
-    setItems(res.data);
+  const fetchBooks = async () => {
+    const res = await axios.get('http://localhost:5000/books');
+    setBooks(res.data);
   };
 
-  const deleteItem = async (id) => {
-    await axios.delete(`http://localhost:5000/items/${id}`);
-    fetchItems();
+  const deleteBook = async (id) => {
+    await axios.delete(`http://localhost:5000/books/${id}`);
+    fetchBooks();
   };
-  const updateItem= async(id) =>{
-    const res = await axios.put(`http://localhost:5000/items/${id}`);
+  const updateBook= async(id) =>{
+    const res = await axios.put(`http://localhost:5000/books/${id}`);
   };
   useEffect(() => {
-    fetchItems();
+    fetchBooks();
   }, []);
 
   return (
     <div>
-      <h1>REACT CRUD APPLICATION</h1>
-      <ItemForm fetchItems={fetchItems} />
-      <ItemList items={items} deleteItem={deleteItem} fetchItems={fetchItems} updateItem={updateItem}/>
+      <h1>Books in the Library</h1>
+      <BookForm fetchBooks={fetchBooks} />
+      <BookList books={books} deleteBook={deleteBook} fetchBooks={fetchBooks} updateBook={updateBook}/>
     </div>
   );
 };
