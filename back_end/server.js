@@ -59,7 +59,8 @@ app.get('/book/:id', async (req, res) => {
 });
 
 app.put('/books/:id', async (req, res) => {
-  const updatedBook = await Book.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  const updatedBook = await Book.findByIdAndUpdate(req.params.id, {$set: req.body}, { new: true });
+  await updatedBook.save();
   res.json(updatedBook);
 });
 

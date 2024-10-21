@@ -15,8 +15,10 @@ const App = () => {
     await axios.delete(`http://localhost:5000/books/${id}`);
     fetchBooks();
   };
-  const updateBook= async(id) =>{
-    const res = await axios.put(`http://localhost:5000/books/${id}`);
+  const updateBook= async(id,updatedBookData) =>{
+    const res = await axios.put(`http://localhost:5000/books/${id}`,updatedBookData);
+    fetchBooks();
+    console.log(updatedBookData,id);
   };
   useEffect(() => {
     fetchBooks();
